@@ -27,7 +27,7 @@ cp terraform.tfvars.example terraform.tfvars
 Edit `terraform.tfvars` with your values:
 ```hcl
 aws_region    = "us-east-1"        # Your AWS region
-instance_type = "t3.medium"        # EC2 instance type
+instance_type = "t3.large"         # EC2 instance type
 key_name      = "your-key-name"    # Your EC2 key pair name
 allowed_cidr  = "0.0.0.0/0"        # IP range allowed to access GitLab
 ```
@@ -98,7 +98,7 @@ terraform destroy
 ## Resources Created
 
 - VPC with public subnet and internet gateway
-- EC2 instance (t3.medium, 30GB EBS for OS only)
+- EC2 instance (t3.large, 30GB EBS for OS only)
 - EFS file system (encrypted, stores all GitLab data)
 - S3 bucket (versioned, for backups)
 - Security groups (SSH, HTTP, HTTPS, NFS)
@@ -106,7 +106,7 @@ terraform destroy
 
 ## Cost Estimate
 
-- EC2 t3.medium: ~$30/month
+- EC2 t3.large: ~$60/month
 - EFS: ~$0.30/GB/month
 - S3: ~$0.023/GB/month
 - Data transfer: Variable

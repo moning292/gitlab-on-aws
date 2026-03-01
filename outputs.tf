@@ -10,7 +10,7 @@ output "gitlab_public_ip" {
 
 output "ssh_command" {
   description = "SSH command"
-  value       = "ssh -i <your-key>.pem ubuntu@${aws_instance.gitlab.public_ip}"
+  value       = "ssh -i <your-key>.pem ec2-user@${aws_instance.gitlab.public_ip}"
 }
 
 output "efs_id" {

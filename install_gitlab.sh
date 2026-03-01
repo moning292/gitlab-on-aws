@@ -2,8 +2,12 @@
 set -e
 
 # Update system
-apt-get update
-apt-get install -y curl openssh-server ca-certificates tzdata perl nfs-common
+yum update -y
+yum install -y curl openssh-server postfix perl nfs-utils
+
+# Start and enable postfix
+systemctl enable postfix
+systemctl start postfix
 
 # Mount EFS
 mkdir -p /mnt/gitlab-data
@@ -17,8 +21,8 @@ mkdir -p /mnt/gitlab-data/gitlab-rails/uploads
 mkdir -p /mnt/gitlab-data/gitlab-ci/builds
 
 # Install GitLab CE
-curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
-EXTERNAL_URL="http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" apt-get install -y gitlab-ce
+curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | bash
+EXTERNAL_URL="http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" yum install -y gitlab-ce
 
 # Configure GitLab to use EFS for all data and S3 for backups
 cat >> /etc/gitlab/gitlab.rb <<EOF
